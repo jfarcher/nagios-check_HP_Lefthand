@@ -2,9 +2,9 @@
 # script :  check_lefthand_cluster_vol.sh
 # version : 1
 # Comment : Script for Nagios to monitor the used volume space on a HP Lefthand Cluster
-# Usage :   - Nagiso Command.cfg:
+# Usage :   - command.cfg
 #           $USER1$/check_lefthand_cluster_vol.sh -H $HOSTADDRESS$ $ARG1$ $ARG2$ $ARG3$ $ARG4$
-#           - Nagios Host.cfg:
+#           - hostentry.cfg:
 #           check_lefthand_cluster_vol.sh!-C <SNMP Community> -w 85 -c 95 -o <hostnumber>
 #find <hostnumber> by running snmpwalk  -v 2c -c <SNMP Community> -m ALL <IPADDRESS> 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.2 its the last number of the oid
 
