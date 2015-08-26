@@ -48,4 +48,4 @@ Adding the following to your host entry
 
   } 
   ```
-
+This plugin also outputs performance data from the check, useful for pnp4nagios or similar data collection.
