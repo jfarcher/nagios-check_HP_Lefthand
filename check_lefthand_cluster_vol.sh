@@ -16,7 +16,7 @@ if [ "$1" = "-H" ] && [ "$3" = "-C" ] && [ "$5" = "-w" ] && [ "$6" -gt "0" ] && 
   let beforecrit="$8"-1
   crit="$8"
   volname="${10}"
-  hostnumber=`/usr/bin/snmpwalk -v 2c -c $community -m ALL "$host" 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.2|grep $volname|awk {' print $1 '}|sed s/SNMPv2-SMI::enterprises.9804.3.1.1.2.12.97.1.2.//`
+  hostnumber=`/usr/bin/snmpwalk -v 2c -c "$community" -m ALL "$host" 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.2|grep $volname|awk {' print $1 '}|sed s/SNMPv2-SMI::enterprises.9804.3.1.1.2.12.97.1.2.//`
   volname=`/usr/lib64/nagios/plugins/check_snmp -H "$host" -C "$community" -P 2c -o 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.2.$hostnumber | awk -F" " '{print $4}'`
   usedspace=`/usr/lib64/nagios/plugins/check_snmp -H "$host" -C "$community" -P 2c -o 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.31.$hostnumber | awk -F" " '{print $4}'`
   totalspace=`/usr/lib64/nagios/plugins/check_snmp -H "$host" -C "$community" -P 2c -o 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.5.$hostnumber | awk -F" " '{print $4}'`
