@@ -5,17 +5,18 @@
 # Usage :   - command.cfg
 #           $USER1$/check_lefthand_cluster_vol.sh -H $HOSTADDRESS$ $ARG1$ $ARG2$ $ARG3$ $ARG4$
 #           - hostentry.cfg:
-#           check_lefthand_cluster_vol.sh!-C <SNMP Community> -w 85 -c 95 -o <hostnumber>
-#find <hostnumber> by running snmpwalk  -v 2c -c <SNMP Community> -m ALL <IPADDRESS> 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.2 its the last number of the oid
+#           check_lefthand_cluster_vol.sh!-C <SNMP Community> -w 85 -c 95 -V Volumename exactly (Case sensitive)
 
-if [ "$1" = "-H" ] && [ "$3" = "-C" ] && [ "$5" = "-w" ] && [ "$6" -gt "0" ] && [ "$7" = "-c" ] && [ "$8" -gt "$6" ] && [ "$9" = "-O" ]; then
+
+if [ "$1" = "-H" ] && [ "$3" = "-C" ] && [ "$5" = "-w" ] && [ "$6" -gt "0" ] && [ "$7" = "-c" ] && [ "$8" -gt "$6" ] && [ "$9" = "-V" ]; then
   host="$2"
   community="$4"
   let beforewarn="$6"-1
   warn="$6"
   let beforecrit="$8"-1
   crit="$8"
-  hostnumber="${10}"
+  volname="${10}"
+  hostnumber=`/usr/bin/snmpwalk -v 2c -c $community -m ALL "$host" 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.2|grep $volname|awk {' print $1 '}|sed s/SNMPv2-SMI::enterprises.9804.3.1.1.2.12.97.1.2.//`
   volname=`/usr/lib64/nagios/plugins/check_snmp -H "$host" -C "$community" -P 2c -o 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.2.$hostnumber | awk -F" " '{print $4}'`
   usedspace=`/usr/lib64/nagios/plugins/check_snmp -H "$host" -C "$community" -P 2c -o 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.31.$hostnumber | awk -F" " '{print $4}'`
   totalspace=`/usr/lib64/nagios/plugins/check_snmp -H "$host" -C "$community" -P 2c -o 1.3.6.1.4.1.9804.3.1.1.2.12.97.1.5.$hostnumber | awk -F" " '{print $4}'`
@@ -50,7 +51,7 @@ else
   echo "check_lefthand_cluster_vol.sh v1.0"
   echo ""
   echo "Usage:"
-  echo "check_lefthand_cluster_vol.sh -H <hostIP> -C <SNMP Community> -w <warnlevel> -c <critlevel> -O object <reference in oid string>"
+  echo "check_lefthand_cluster_vol.sh -H <hostIP> -C <SNMP Community> -w <warnlevel> -c <critlevel> -V Volumename exactly"
   echo ""
   echo "warnlevel and critlevel is percentage value without %"
   echo ""
