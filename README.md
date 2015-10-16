@@ -25,6 +25,16 @@ This check would then return something like
 
 Adding this into Nagios would be a case of:
 
+copy the check_lefthand_cluster_vol.sh file to /usr/lib64/nagios/plugins or /usr/lib/nagios/plugins, whichever is relevant to your nagios installation. 
+
+make sure the file is executable
+
+chmod +x /usr/lib64/nagios/plugins/check_lefthand_cluster_vol.sh
+
+or
+
+chmod +x /usr/lib/nagios/plugins/check_lefthand_cluster_vol.sh
+
 Adding the following to commands.cfg
 
 ```
