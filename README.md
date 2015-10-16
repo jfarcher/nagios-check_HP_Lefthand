@@ -3,9 +3,21 @@ This bash script will run several snmp queries against given clusters to report 
 
 # How to use
 
-Say we have a Volume named VOL1 can monitor a volume using the following command
+Say we have a Volume named VOL1 we can monitor the volume using the following command
 
 `./check_lefthand_cluster_vol.sh -H 10.1.0.50 -C public -w 80 -c 95 -V VOL1`
+
+Switches:
+
+-H Hostname or IP address of cluster VIP
+
+-C SNMP Community string (only v2c supported at this point)
+
+-w Warning Value
+
+-c Critical Value
+
+-V Volume name exactly as it is in CMC
 
 This check would then return something like
 
